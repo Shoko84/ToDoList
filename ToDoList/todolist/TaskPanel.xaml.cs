@@ -26,7 +26,8 @@ namespace todolist
         {
             InitializeComponent();
             Info = taskInfo;
-            TextContent.Text = Info.Title + "\r\n\r\n" + Info.Content;
+            TextTitle.Text = Info.Title;
+            TextContent.Text = Info.Content;
         }
 
         //Event raising for a communication with the main window
@@ -35,9 +36,19 @@ namespace todolist
             EventManager.RegisterRoutedEvent("TaskEditEventFromPanel", RoutingStrategy.Bubble,
             typeof(TaskPanelArgs), typeof(TaskPanel));
 
-        private void TaskButton_Click(object sender, RoutedEventArgs e)
+        private void EditTaskClick(object sender, MouseButtonEventArgs e)
         {
             RaiseEvent(new TaskPanelArgs(TaskPanel.TaskEditEventFromPanel, Info));
+        }
+
+        private void HoveringEnterTask(object sender, MouseEventArgs e)
+        {
+            TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4286b2"));
+        }
+
+        private void HoveringLeaveTask(object sender, MouseEventArgs e)
+        {
+            TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2e81b7"));
         }
     }
 }
