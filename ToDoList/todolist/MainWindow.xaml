@@ -36,27 +36,14 @@
         </Grid>
         <!-- Wrapper that shows filtered tasks -->
         <ScrollViewer x:Name="MyScrollViewer" Grid.Column="1" Margin="15" VerticalScrollBarVisibility="Auto">
-            <WrapPanel MinWidth="120" Width="{Binding ElementName=MyScrollViewer, Path=ViewportWidth}">
-                <!-- Temporary buttons to see if the wrapping works -->
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
-                <Button Width="120" Height="160" Margin="15"></Button>
+            <WrapPanel Name="TaskPanelsContainer" MinWidth="120" Width="{Binding ElementName=MyScrollViewer, Path=ViewportWidth}">
+                
             </WrapPanel>
         </ScrollViewer>
         <!-- Add new todo -->
-        <Canvas Grid.Column="1">
+        <Canvas Grid.Column="1" MouseLeftButtonDown="AddTaskButton_MouseLeftButtonDown">
             <Ellipse Canvas.Bottom="15" Canvas.Right="15" Fill="#e54d42"  
-                     Height="55" Width="55"/>
+                     Height="55" Width="55" />
             <TextBlock Canvas.Bottom="23" Canvas.Right="30" Text="+" FontSize="36" Foreground="#ecf0f1"/>
         </Canvas>
     </Grid>

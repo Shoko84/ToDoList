@@ -21,11 +21,35 @@ namespace todolist
     /// </summary>
     public partial class MainWindow : Window
     {
+        AddTaskWindow _addTaskWindow;
+        List<TaskPanel> taskPanels;
 
         public MainWindow()
         {
             InitializeComponent();
+            taskPanels = new List<TaskPanel>();
         }
 
+        private void RefreshTaskPanelsOnScreen()
+        {
+            TaskPanelsContainer.Children.Clear();
+            for (var i = 0; i < taskPanels.Count; ++i)
+                TaskPanelsContainer.Children.Add(taskPanels[i]);
+        }
+
+        private void AddTaskButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TaskInfo taskInfo = new TaskInfo();
+
+            _addTaskWindow = new AddTaskWindow(taskInfo);
+            if (_addTaskWindow.ShowDialog() ?? false)
+            {
+                Console.WriteLine(taskInfo.Title);
+                Console.WriteLine(taskInfo.Content);
+                Console.WriteLine(taskInfo.Due.ToString());
+                taskPanels.Add(new TaskPanel(taskInfo));
+                RefreshTaskPanelsOnScreen();
+            }
+        }
     }
 }
