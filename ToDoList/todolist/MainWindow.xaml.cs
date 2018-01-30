@@ -22,24 +22,37 @@ namespace todolist
     public partial class MainWindow : Window
     {
         AddTaskWindow _addTaskWindow;
-        List<TaskPanel> taskPanels;
+        EditTaskWindow _editTaskWindow;
+        TaskPanelViewer _taskPanelViewer;
 
         public MainWindow()
         {
             InitializeComponent();
-            taskPanels = new List<TaskPanel>();
+            _taskPanelViewer = new TaskPanelViewer();
+            MainContentArea.Content = _taskPanelViewer;
+
+            AddHandler(TaskPanelViewer.TaskEditEventFromPanelViewer,
+                       new RoutedEventHandler(TaskEditEventFromMainWindowHandler));
         }
 
-        private void RefreshTaskPanelsOnScreen()
+        private void TaskEditEventFromMainWindowHandler(object sender, RoutedEventArgs e)
         {
-            TaskPanelsContainer.Children.Clear();
-            for (var i = 0; i < taskPanels.Count; ++i)
-                TaskPanelsContainer.Children.Add(taskPanels[i]);
+            TaskPanelArgs args = e as TaskPanelArgs;
+            Console.WriteLine(args.TaskInfo.Id);
+
+            _editTaskWindow = new EditTaskWindow(args.TaskInfo);
+            if (_editTaskWindow.ShowDialog() ?? false)
+            {
+                Console.WriteLine(args.TaskInfo.Title);
+                Console.WriteLine(args.TaskInfo.Content);
+                Console.WriteLine(args.TaskInfo.Due.ToString());
+                _taskPanelViewer.EditTask(args.TaskInfo);
+            }
         }
 
         private void AddTaskButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            TaskInfo taskInfo = new TaskInfo();
+            TaskInfo taskInfo = new TaskInfo(Convert.ToUInt32(_taskPanelViewer.TaskPanels.Count));
 
             _addTaskWindow = new AddTaskWindow(taskInfo);
             if (_addTaskWindow.ShowDialog() ?? false)
@@ -47,8 +60,7 @@ namespace todolist
                 Console.WriteLine(taskInfo.Title);
                 Console.WriteLine(taskInfo.Content);
                 Console.WriteLine(taskInfo.Due.ToString());
-                taskPanels.Add(new TaskPanel(taskInfo));
-                RefreshTaskPanelsOnScreen();
+                _taskPanelViewer.AddTask(taskInfo);
             }
         }
     }

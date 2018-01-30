@@ -8,13 +8,15 @@ namespace todolist
 {
     public class TaskInfo
     {
-        public TaskInfo(string title = "", string content = "", DateTime? due = null, bool completed = false)
+        public TaskInfo(UInt32 id, string title = "", string content = "", DateTime? due = null, bool completed = false)
         {
+            Id = id;
             Title = title;
             Content = content;
             Due = due;
             Completed = completed;
         }
+        public UInt32 Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime? Due { get; set; }

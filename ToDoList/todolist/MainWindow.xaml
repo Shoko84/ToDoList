@@ -34,12 +34,7 @@
                 <TextBlock FlowDirection="LeftToRight" Text="Completed" Foreground="#ecf0f1"/>
             </CheckBox>
         </Grid>
-        <!-- Wrapper that shows filtered tasks -->
-        <ScrollViewer x:Name="MyScrollViewer" Grid.Column="1" Margin="15" VerticalScrollBarVisibility="Auto">
-            <WrapPanel Name="TaskPanelsContainer" MinWidth="120" Width="{Binding ElementName=MyScrollViewer, Path=ViewportWidth}">
-                
-            </WrapPanel>
-        </ScrollViewer>
+        <ContentControl x:Name="MainContentArea" Grid.Column="1" Margin="15"/>
         <!-- Add new todo -->
         <Canvas Grid.Column="1" MouseLeftButtonDown="AddTaskButton_MouseLeftButtonDown">
             <Ellipse Canvas.Bottom="15" Canvas.Right="15" Fill="#e54d42"  
