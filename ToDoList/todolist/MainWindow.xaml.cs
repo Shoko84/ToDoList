@@ -21,9 +21,9 @@ namespace todolist
     /// </summary>
     public partial class MainWindow : Window
     {
-        AddTaskWindow _addTaskWindow;
-        EditTaskWindow _editTaskWindow;
-        TaskPanelViewer _taskPanelViewer;
+        TaskPanelViewer     _taskPanelViewer;
+        AddTaskControl      _addTaskControl;
+        EditTaskControl     _editTaskControl;
 
         public MainWindow()
         {
@@ -33,35 +33,63 @@ namespace todolist
 
             AddHandler(TaskPanelViewer.TaskEditEventFromPanelViewer,
                        new RoutedEventHandler(TaskEditEventFromMainWindowHandler));
+            AddHandler(AddTaskControl.AddTaskConfirmEvent,
+                       new RoutedEventHandler(AddTaskConfirmEventHandler));
+            AddHandler(AddTaskControl.AddTaskCancelEvent,
+                       new RoutedEventHandler(AddTaskCancelEventHandler));
+            AddHandler(EditTaskControl.EditTaskConfirmEvent,
+                       new RoutedEventHandler(EditTaskConfirmEventHandler));
+            AddHandler(EditTaskControl.EditTaskCancelEvent,
+                       new RoutedEventHandler(EditTaskCancelEventHandler));
         }
 
-        private void TaskEditEventFromMainWindowHandler(object sender, RoutedEventArgs e)
-        {
-            TaskPanelArgs args = e as TaskPanelArgs;
-            Console.WriteLine(args.TaskInfo.Id);
-
-            _editTaskWindow = new EditTaskWindow(args.TaskInfo);
-            if (_editTaskWindow.ShowDialog() ?? false)
-            {
-                Console.WriteLine(args.TaskInfo.Title);
-                Console.WriteLine(args.TaskInfo.Content);
-                Console.WriteLine(args.TaskInfo.Due.ToString());
-                _taskPanelViewer.EditTask(args.TaskInfo);
-            }
-        }
-
+        // Local events
         private void AddTaskButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            TaskInfo taskInfo = new TaskInfo(Convert.ToUInt32(_taskPanelViewer.TaskPanels.Count));
+            _addTaskControl = new AddTaskControl(Convert.ToUInt32(_taskPanelViewer.TaskPanels.Count));
+            AddTaskButton.Visibility = Visibility.Hidden;
+            MainContentArea.Content = _addTaskControl;
 
-            _addTaskWindow = new AddTaskWindow(taskInfo);
-            if (_addTaskWindow.ShowDialog() ?? false)
-            {
-                Console.WriteLine(taskInfo.Title);
-                Console.WriteLine(taskInfo.Content);
-                Console.WriteLine(taskInfo.Due.ToString());
-                _taskPanelViewer.AddTask(taskInfo);
-            }
+        }
+
+        // Signals handler
+        private void TaskEditEventFromMainWindowHandler(object sender, RoutedEventArgs e)
+        {
+            TaskInfoArgs args = e as TaskInfoArgs;
+
+            _editTaskControl = new EditTaskControl(args.TaskInfo);
+            AddTaskButton.Visibility = Visibility.Hidden;
+            MainContentArea.Content = _editTaskControl;
+        }
+
+        private void AddTaskConfirmEventHandler(object sender, RoutedEventArgs e)
+        {
+            TaskInfoArgs args = e as TaskInfoArgs;
+
+            _taskPanelViewer.AddTask(args.TaskInfo);
+            AddTaskButton.Visibility = Visibility.Visible;
+            MainContentArea.Content = _taskPanelViewer;
+        }
+
+        private void AddTaskCancelEventHandler(object sender, RoutedEventArgs e)
+        {
+            AddTaskButton.Visibility = Visibility.Visible;
+            MainContentArea.Content = _taskPanelViewer;
+        }
+
+        private void EditTaskConfirmEventHandler(object sender, RoutedEventArgs e)
+        {
+            TaskInfoArgs args = e as TaskInfoArgs;
+
+            _taskPanelViewer.EditTask(args.TaskInfo);
+            AddTaskButton.Visibility = Visibility.Visible;
+            MainContentArea.Content = _taskPanelViewer;
+        }
+
+        private void EditTaskCancelEventHandler(object sender, RoutedEventArgs e)
+        {
+            AddTaskButton.Visibility = Visibility.Visible;
+            MainContentArea.Content = _taskPanelViewer;
         }
     }
 }

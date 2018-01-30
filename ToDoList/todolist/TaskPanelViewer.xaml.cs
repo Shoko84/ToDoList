@@ -54,19 +54,13 @@ namespace todolist
 
         public static readonly RoutedEvent TaskEditEventFromPanelViewer =
             EventManager.RegisterRoutedEvent("TaskEditEventFromPanelViewer", RoutingStrategy.Bubble,
-            typeof(TaskPanelArgs), typeof(TaskPanelViewer));
-
-        //public event RoutedEventHandler TaskEdit
-        //{
-        //    add { AddHandler(TaskEditEventFromPanelViewer, value); }
-        //    remove { RemoveHandler(TaskEditEventFromPanelViewer, value); }
-        //}
+            typeof(TaskInfoArgs), typeof(TaskPanelViewer));
 
         private void TaskEditEventFromPanelEventHandler(object sender, RoutedEventArgs e)
         {
-            TaskPanelArgs args = e as TaskPanelArgs;
+            TaskInfoArgs args = e as TaskInfoArgs;
 
-            RaiseEvent(new TaskPanelArgs(TaskPanelViewer.TaskEditEventFromPanelViewer, args.TaskInfo));
+            RaiseEvent(new TaskInfoArgs(TaskPanelViewer.TaskEditEventFromPanelViewer, args.TaskInfo));
         }
     }
 }

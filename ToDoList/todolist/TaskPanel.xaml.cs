@@ -34,11 +34,11 @@ namespace todolist
 
         public static readonly RoutedEvent TaskEditEventFromPanel =
             EventManager.RegisterRoutedEvent("TaskEditEventFromPanel", RoutingStrategy.Bubble,
-            typeof(TaskPanelArgs), typeof(TaskPanel));
+            typeof(TaskInfoArgs), typeof(TaskPanel));
 
         private void EditTaskClick(object sender, MouseButtonEventArgs e)
         {
-            RaiseEvent(new TaskPanelArgs(TaskPanel.TaskEditEventFromPanel, Info));
+            RaiseEvent(new TaskInfoArgs(TaskPanel.TaskEditEventFromPanel, Info));
         }
 
         private void HoveringEnterTask(object sender, MouseEventArgs e)

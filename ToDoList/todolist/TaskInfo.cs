@@ -16,6 +16,16 @@ namespace todolist
             Due = due;
             Completed = completed;
         }
+
+        public TaskInfo(TaskInfo other)
+        {
+            Id = other.Id;
+            Title = other.Title;
+            Content = other.Content;
+            Due = other.Due;
+            Completed = other.Completed;
+        }
+
         public UInt32 Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
