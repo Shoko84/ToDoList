@@ -25,6 +25,24 @@ namespace todolist
         {
             InitializeComponent();
             _taskInfo = taskInfo;
+
+            TitleTextBox.Text = _taskInfo.Title;
+            ContentTextBox.Text = _taskInfo.Content;
+            DueTimePicker.SelectedDate = _taskInfo.Due;
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+            _taskInfo.Title = TitleTextBox.Text;
+            _taskInfo.Content = ContentTextBox.Text;
+            _taskInfo.Due = DueTimePicker.SelectedDate;
+            Close();
         }
     }
 }
