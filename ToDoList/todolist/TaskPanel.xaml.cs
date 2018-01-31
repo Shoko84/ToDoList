@@ -22,6 +22,8 @@ namespace todolist
     public partial class TaskPanel : UserControl
     {
         public TaskInfo Info { get; set; }
+        private bool    isBlocking;
+        private bool    canHover;
 
         public TaskPanel(TaskInfo taskInfo)
         {
@@ -29,6 +31,8 @@ namespace todolist
             Info = taskInfo;
             TextTitle.Text = Info.Title;
             TextContent.Text = Info.Content;
+            isBlocking = false;
+            canHover = true;
 
             // Status of a Task
             Image img = new Image
@@ -57,30 +61,52 @@ namespace todolist
             EventManager.RegisterRoutedEvent("TaskDeleteEventFromPanel", RoutingStrategy.Bubble,
             typeof(TaskInfoArgs), typeof(TaskPanel));
 
+        public void BlockingEventRaising(bool _isBlocked)
+        {
+            isBlocking = _isBlocked;
+        }
+
+        public void EnableHovering(bool _canHover)
+        {
+            canHover = _canHover;
+        }
+
         private void EditTaskClick(object sender, MouseButtonEventArgs e)
         {
-            RaiseEvent(new TaskInfoArgs(TaskPanel.TaskEditEventFromPanel, Info));
+            if (!isBlocking)
+                RaiseEvent(new TaskInfoArgs(TaskPanel.TaskEditEventFromPanel, Info));
         }
 
         private void HoveringEnterTask(object sender, MouseEventArgs e)
         {
-            TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4286b2"));
+            if (canHover)
+                TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4286b2"));
         }
 
         private void HoveringLeaveTask(object sender, MouseEventArgs e)
         {
-            TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2e81b7"));
+            if (canHover)
+                TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2e81b7"));
         }
 
         private void DeleteIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
-            RaiseEvent(new TaskInfoArgs(TaskPanel.TaskDeleteEventFromPanel, Info));
+            if (!isBlocking)
+                RaiseEvent(new TaskInfoArgs(TaskPanel.TaskDeleteEventFromPanel, Info));
         }
 
         private void DeleteIcon_MouseEnter(object sender, MouseEventArgs e)
         {
-            TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2e81b7"));
+            if (canHover)
+                TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2e81b7"));
+            e.Handled = true;
+        }
+
+        private void DeleteIcon_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (canHover)
+                TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4286b2"));
             e.Handled = true;
         }
     }

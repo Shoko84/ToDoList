@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <fa:ImageAwesome Name="DeleteIcon" Grid.Column="1" Icon="Trash" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5,0" Width="10" Height="10" Foreground="#ecf0f1"
-                             MouseLeftButtonDown="DeleteIcon_MouseLeftButtonDown" MouseEnter="DeleteIcon_MouseEnter"/>
+                             MouseLeftButtonDown="DeleteIcon_MouseLeftButtonDown" MouseEnter="DeleteIcon_MouseEnter" MouseLeave="DeleteIcon_MouseLeave"/>
         </Grid>
         <TextBlock Grid.Row="1" Name="TextTitle" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="#ecf0f1"
                    Padding="10" TextTrimming="WordEllipsis" FontSize="14"/>

@@ -62,6 +62,9 @@
     <Compile Include="AddTaskControl.xaml.cs">
       <DependentUpon>AddTaskControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DeletionTaskControl.xaml.cs">
+      <DependentUpon>DeletionTaskControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditTaskControl.xaml.cs">
       <DependentUpon>EditTaskControl.xaml</DependentUpon>
     </Compile>
@@ -74,6 +77,10 @@
       <DependentUpon>TaskPanelViewer.xaml</DependentUpon>
     </Compile>
     <Page Include="AddTaskControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeletionTaskControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

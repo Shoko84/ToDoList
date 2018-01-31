@@ -24,6 +24,7 @@ namespace todolist
         TaskPanelViewer     _taskPanelViewer;
         AddTaskControl      _addTaskControl;
         EditTaskControl     _editTaskControl;
+        DeletionTaskControl _deletionTaskControl;
 
         public MainWindow()
         {
@@ -35,6 +36,10 @@ namespace todolist
                        new RoutedEventHandler(TaskEditEventFromMainWindowHandler));
             AddHandler(TaskPanelViewer.TaskDeleteEventFromPanelViewer,
                        new RoutedEventHandler(TaskDeleteEventFromMainWindowHandler));
+            AddHandler(DeletionTaskControl.DeleteTaskConfirmEvent,
+                       new RoutedEventHandler(DeleteTaskConfirmEventHandler));
+            AddHandler(DeletionTaskControl.DeleteTaskCancelEvent,
+                       new RoutedEventHandler(DeleteTaskCancelEventHandler));
             AddHandler(AddTaskControl.AddTaskConfirmEvent,
                        new RoutedEventHandler(AddTaskConfirmEventHandler));
             AddHandler(AddTaskControl.AddTaskCancelEvent,
@@ -63,12 +68,29 @@ namespace todolist
             AddTaskButton.Visibility = Visibility.Hidden;
             MainContentArea.Content = _editTaskControl;
         }
+
         private void TaskDeleteEventFromMainWindowHandler(object sender, RoutedEventArgs e)
         {
-            // New user control for confirmation ?
+            TaskInfoArgs args = e as TaskInfoArgs;
+
+            _deletionTaskControl = new DeletionTaskControl(args.TaskInfo);
+            AddTaskButton.Visibility = Visibility.Hidden;
+            MainContentArea.Content = _deletionTaskControl;
+        }
+
+        private void DeleteTaskConfirmEventHandler(object sender, RoutedEventArgs e)
+        {
             TaskInfoArgs args = e as TaskInfoArgs;
 
             _taskPanelViewer.DeleteTask(args.TaskInfo);
+            AddTaskButton.Visibility = Visibility.Visible;
+            MainContentArea.Content = _taskPanelViewer;
+        }
+
+        private void DeleteTaskCancelEventHandler(object sender, RoutedEventArgs e)
+        {
+            AddTaskButton.Visibility = Visibility.Visible;
+            MainContentArea.Content = _taskPanelViewer;
         }
 
         private void AddTaskConfirmEventHandler(object sender, RoutedEventArgs e)

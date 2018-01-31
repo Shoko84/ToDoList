@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:todolist"
         mc:Ignorable="d"
-        Title="ToDoList" Width="720" Height="480" MinWidth="540" MinHeight="450">
+        Title="ToDoList" Width="720" Height="480" MinWidth="580" MinHeight="490">
     <!-- Main grid -->
     <Grid Background="#ecf0f1">
         <Grid.ColumnDefinitions>
