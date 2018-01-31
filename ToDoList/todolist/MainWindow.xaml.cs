@@ -33,6 +33,8 @@ namespace todolist
 
             AddHandler(TaskPanelViewer.TaskEditEventFromPanelViewer,
                        new RoutedEventHandler(TaskEditEventFromMainWindowHandler));
+            AddHandler(TaskPanelViewer.TaskDeleteEventFromPanelViewer,
+                       new RoutedEventHandler(TaskDeleteEventFromMainWindowHandler));
             AddHandler(AddTaskControl.AddTaskConfirmEvent,
                        new RoutedEventHandler(AddTaskConfirmEventHandler));
             AddHandler(AddTaskControl.AddTaskCancelEvent,
@@ -60,6 +62,13 @@ namespace todolist
             _editTaskControl = new EditTaskControl(args.TaskInfo);
             AddTaskButton.Visibility = Visibility.Hidden;
             MainContentArea.Content = _editTaskControl;
+        }
+        private void TaskDeleteEventFromMainWindowHandler(object sender, RoutedEventArgs e)
+        {
+            // New user control for confirmation ?
+            TaskInfoArgs args = e as TaskInfoArgs;
+
+            _taskPanelViewer.DeleteTask(args.TaskInfo);
         }
 
         private void AddTaskConfirmEventHandler(object sender, RoutedEventArgs e)

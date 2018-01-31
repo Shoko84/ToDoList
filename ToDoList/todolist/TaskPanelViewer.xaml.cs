@@ -29,6 +29,9 @@ namespace todolist
 
             AddHandler(TaskPanel.TaskEditEventFromPanel,
                        new RoutedEventHandler(TaskEditEventFromPanelEventHandler));
+
+            AddHandler(TaskPanel.TaskDeleteEventFromPanel,
+                       new RoutedEventHandler(TaskDeleteEventFromPanelEventHandler));
         }
 
         public void AddTask(TaskInfo taskInfo)
@@ -40,6 +43,12 @@ namespace todolist
         public void EditTask(TaskInfo taskInfo)
         {
             TaskPanels[Convert.ToInt32(taskInfo.Id)] = new TaskPanel(taskInfo);
+            RefreshTaskPanelsOnScreen();
+        }
+
+        public void DeleteTask(TaskInfo taskInfo)
+        {
+            TaskPanels.RemoveAt(Convert.ToInt32(taskInfo.Id));
             RefreshTaskPanelsOnScreen();
         }
 
@@ -56,11 +65,21 @@ namespace todolist
             EventManager.RegisterRoutedEvent("TaskEditEventFromPanelViewer", RoutingStrategy.Bubble,
             typeof(TaskInfoArgs), typeof(TaskPanelViewer));
 
+        public static readonly RoutedEvent TaskDeleteEventFromPanelViewer =
+            EventManager.RegisterRoutedEvent("TaskDeleteEventFromPanelViewer", RoutingStrategy.Bubble,
+            typeof(TaskInfoArgs), typeof(TaskPanelViewer));
+
         private void TaskEditEventFromPanelEventHandler(object sender, RoutedEventArgs e)
         {
             TaskInfoArgs args = e as TaskInfoArgs;
 
             RaiseEvent(new TaskInfoArgs(TaskPanelViewer.TaskEditEventFromPanelViewer, args.TaskInfo));
+        }
+        private void TaskDeleteEventFromPanelEventHandler(object sender, RoutedEventArgs e)
+        {
+            TaskInfoArgs args = e as TaskInfoArgs;
+
+            RaiseEvent(new TaskInfoArgs(TaskPanelViewer.TaskDeleteEventFromPanelViewer, args.TaskInfo));
         }
     }
 }
