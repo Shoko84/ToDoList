@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:todolist"
         mc:Ignorable="d"
-        Title="ToDoList" Width="720" Height="480">
+        Title="ToDoList" Width="720" Height="480" MinWidth="580" MinHeight="490">
     <!-- Main grid -->
     <Grid Background="#ecf0f1">
         <Grid.ColumnDefinitions>
@@ -27,17 +27,17 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Grid.Row="0" Margin="6" Content="Show all" Background="#e54d42" Foreground="#ecf0f1"/>
             <Button Grid.Column="1" Grid.Row="0" Margin="6" Content="Clear all" Background="#e54d42" Foreground="#ecf0f1"/>
-            <CheckBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FlowDirection="LeftToRight">
+            <CheckBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FlowDirection="LeftToRight" IsChecked="True">
                 <TextBlock FlowDirection="LeftToRight" Text="To be done" Foreground="#ecf0f1"/>
             </CheckBox>
-            <CheckBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FlowDirection="LeftToRight">
+            <CheckBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FlowDirection="LeftToRight" IsChecked="True">
                 <TextBlock FlowDirection="LeftToRight" Text="Completed" Foreground="#ecf0f1"/>
             </CheckBox>
         </Grid>
         <ContentControl x:Name="MainContentArea" Grid.Column="1" Margin="15"/>
         <!-- Add new todo -->
-        <Canvas Grid.Column="1" MouseLeftButtonDown="AddTaskButton_MouseLeftButtonDown">
-            <Ellipse Canvas.Bottom="15" Canvas.Right="15" Fill="#e54d42"  
+        <Canvas Name="AddTaskButton" Grid.Column="1" MouseLeftButtonDown="AddTaskButton_MouseLeftButtonDown">
+            <Ellipse Canvas.Bottom="15" Canvas.Right="15" Fill="#e54d42"
                      Height="55" Width="55" />
             <TextBlock Canvas.Bottom="23" Canvas.Right="30" Text="+" FontSize="36" Foreground="#ecf0f1"/>
         </Canvas>

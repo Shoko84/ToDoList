@@ -29,6 +29,9 @@ namespace todolist
 
             AddHandler(TaskPanel.TaskEditEventFromPanel,
                        new RoutedEventHandler(TaskEditEventFromPanelEventHandler));
+
+            AddHandler(TaskPanel.TaskDeleteEventFromPanel,
+                       new RoutedEventHandler(TaskDeleteEventFromPanelEventHandler));
         }
 
         public void AddTask(TaskInfo taskInfo)
@@ -43,6 +46,12 @@ namespace todolist
             RefreshTaskPanelsOnScreen();
         }
 
+        public void DeleteTask(TaskInfo taskInfo)
+        {
+            TaskPanels.RemoveAt(Convert.ToInt32(taskInfo.Id));
+            RefreshTaskPanelsOnScreen();
+        }
+
         private void RefreshTaskPanelsOnScreen()
         {
             TaskPanelsContainer.Children.Clear();
@@ -54,19 +63,23 @@ namespace todolist
 
         public static readonly RoutedEvent TaskEditEventFromPanelViewer =
             EventManager.RegisterRoutedEvent("TaskEditEventFromPanelViewer", RoutingStrategy.Bubble,
-            typeof(TaskPanelArgs), typeof(TaskPanelViewer));
+            typeof(TaskInfoArgs), typeof(TaskPanelViewer));
 
-        //public event RoutedEventHandler TaskEdit
-        //{
-        //    add { AddHandler(TaskEditEventFromPanelViewer, value); }
-        //    remove { RemoveHandler(TaskEditEventFromPanelViewer, value); }
-        //}
+        public static readonly RoutedEvent TaskDeleteEventFromPanelViewer =
+            EventManager.RegisterRoutedEvent("TaskDeleteEventFromPanelViewer", RoutingStrategy.Bubble,
+            typeof(TaskInfoArgs), typeof(TaskPanelViewer));
 
         private void TaskEditEventFromPanelEventHandler(object sender, RoutedEventArgs e)
         {
-            TaskPanelArgs args = e as TaskPanelArgs;
+            TaskInfoArgs args = e as TaskInfoArgs;
 
-            RaiseEvent(new TaskPanelArgs(TaskPanelViewer.TaskEditEventFromPanelViewer, args.TaskInfo));
+            RaiseEvent(new TaskInfoArgs(TaskPanelViewer.TaskEditEventFromPanelViewer, args.TaskInfo));
+        }
+        private void TaskDeleteEventFromPanelEventHandler(object sender, RoutedEventArgs e)
+        {
+            TaskInfoArgs args = e as TaskInfoArgs;
+
+            RaiseEvent(new TaskInfoArgs(TaskPanelViewer.TaskDeleteEventFromPanelViewer, args.TaskInfo));
         }
     }
 }

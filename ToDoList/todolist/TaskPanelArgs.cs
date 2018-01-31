@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace todolist
 {
-    public class TaskPanelArgs : RoutedEventArgs
+    public class TaskInfoArgs : RoutedEventArgs
     {
         private readonly TaskInfo taskInfo;
 
@@ -16,7 +16,7 @@ namespace todolist
             get { return taskInfo; }
         }
 
-        public TaskPanelArgs(RoutedEvent routedEvent, TaskInfo taskInfo) : base(routedEvent)
+        public TaskInfoArgs(RoutedEvent routedEvent, TaskInfo taskInfo) : base(routedEvent)
         {
             this.taskInfo = taskInfo;
         }

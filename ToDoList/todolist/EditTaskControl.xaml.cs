@@ -10,22 +10,33 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace todolist
 {
     /// <summary>
-    /// Interaction logic for EditTaskWindow.xaml
+    /// Interaction logic for EditTaskControl.xaml
     /// </summary>
-    public partial class EditTaskWindow : Window
+    public partial class EditTaskControl : UserControl
     {
         private TaskInfo _taskInfo;
 
-        public EditTaskWindow(TaskInfo taskInfo)
+        //Events / Signals
+        public static readonly RoutedEvent EditTaskConfirmEvent =
+            EventManager.RegisterRoutedEvent("EditTaskConfirmEvent", RoutingStrategy.Bubble,
+            typeof(TaskInfoArgs), typeof(EditTaskControl));
+
+        public static readonly RoutedEvent EditTaskCancelEvent =
+            EventManager.RegisterRoutedEvent("EditTaskCancelEvent", RoutingStrategy.Bubble,
+            typeof(RoutedEventArgs), typeof(EditTaskControl));
+
+
+        public EditTaskControl(TaskInfo taskInfo)
         {
             InitializeComponent();
-            _taskInfo = taskInfo;
 
+            _taskInfo = taskInfo;
             TitleTextBox.Text = _taskInfo.Title;
             ContentTextBox.Text = _taskInfo.Content;
             DueTimePicker.SelectedDate = _taskInfo.Due;
@@ -33,16 +44,15 @@ namespace todolist
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            RaiseEvent(new RoutedEventArgs(EditTaskControl.EditTaskCancelEvent));
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
             _taskInfo.Title = TitleTextBox.Text;
             _taskInfo.Content = ContentTextBox.Text;
             _taskInfo.Due = DueTimePicker.SelectedDate;
-            Close();
+            RaiseEvent(new TaskInfoArgs(EditTaskControl.EditTaskConfirmEvent, _taskInfo));
         }
     }
 }
