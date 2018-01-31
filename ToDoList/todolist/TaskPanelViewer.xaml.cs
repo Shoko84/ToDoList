@@ -29,15 +29,29 @@ namespace todolist
 
             AddHandler(TaskPanel.TaskEditEventFromPanel,
                        new RoutedEventHandler(TaskEditEventFromPanelEventHandler));
-
             AddHandler(TaskPanel.TaskDeleteEventFromPanel,
                        new RoutedEventHandler(TaskDeleteEventFromPanelEventHandler));
+            AddHandler(TaskPanel.TaskCompletedEventFromPanel,
+                       new RoutedEventHandler(TaskCompletedEventFromPanelHandler));
         }
 
         public void AddTask(TaskInfo taskInfo)
         {
             TaskPanels.Add(new TaskPanel(taskInfo));
             RefreshTaskPanelsOnScreen();
+        }
+
+        public void AddTasks(List<TaskInfo> taskInfos)
+        {
+            for (var i = 0; i < taskInfos.Count; ++i)
+                AddTask(taskInfos[i]);
+            RefreshTaskPanelsOnScreen();
+        }
+
+        public void SetTasks(List<TaskInfo> taskInfos)
+        {
+            TaskPanels.Clear();
+            AddTasks(taskInfos);
         }
 
         public void EditTask(TaskInfo taskInfo)
@@ -69,17 +83,29 @@ namespace todolist
             EventManager.RegisterRoutedEvent("TaskDeleteEventFromPanelViewer", RoutingStrategy.Bubble,
             typeof(TaskInfoArgs), typeof(TaskPanelViewer));
 
+        public static readonly RoutedEvent TaskCompletedEventFromPanelViewer =
+            EventManager.RegisterRoutedEvent("TaskCompletedEventFromPanelViewer", RoutingStrategy.Bubble,
+            typeof(TaskInfoArgs), typeof(TaskPanelViewer));
+
         private void TaskEditEventFromPanelEventHandler(object sender, RoutedEventArgs e)
         {
             TaskInfoArgs args = e as TaskInfoArgs;
 
             RaiseEvent(new TaskInfoArgs(TaskPanelViewer.TaskEditEventFromPanelViewer, args.TaskInfo));
         }
+
         private void TaskDeleteEventFromPanelEventHandler(object sender, RoutedEventArgs e)
         {
             TaskInfoArgs args = e as TaskInfoArgs;
 
             RaiseEvent(new TaskInfoArgs(TaskPanelViewer.TaskDeleteEventFromPanelViewer, args.TaskInfo));
+        }
+
+        private void TaskCompletedEventFromPanelHandler(object sender, RoutedEventArgs e)
+        {
+            TaskInfoArgs args = e as TaskInfoArgs;
+
+            RaiseEvent(new TaskInfoArgs(TaskPanelViewer.TaskCompletedEventFromPanelViewer, args.TaskInfo));
         }
     }
 }

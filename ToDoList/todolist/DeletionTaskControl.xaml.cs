@@ -39,6 +39,7 @@ namespace todolist
 
             TaskPanel taskPanel = TaskPanelContent.Content as TaskPanel;
             taskPanel.DeleteIcon.Visibility = Visibility.Hidden;
+            taskPanel.DoneButton.Visibility = Visibility.Hidden;
             taskPanel.BlockingEventRaising(true);
             taskPanel.EnableHovering(false);
         }

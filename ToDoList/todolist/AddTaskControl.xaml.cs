@@ -34,10 +34,10 @@ namespace todolist
 
 
         // Methods
-        public AddTaskControl(UInt32 id)
+        public AddTaskControl()
         {
             InitializeComponent();
-            _taskInfo = new TaskInfo(id);
+            _taskInfo = new TaskInfo();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -50,7 +50,15 @@ namespace todolist
             _taskInfo.Title = TitleTextBox.Text;
             _taskInfo.Content = ContentTextBox.Text;
             _taskInfo.Due = DueTimePicker.SelectedDate;
-            RaiseEvent(new TaskInfoArgs(AddTaskControl.AddTaskConfirmEvent, _taskInfo));
+            if (!String.IsNullOrWhiteSpace(_taskInfo.Title) && _taskInfo.Due.HasValue)
+                RaiseEvent(new TaskInfoArgs(AddTaskControl.AddTaskConfirmEvent, _taskInfo));
+            else
+            {
+                if (String.IsNullOrWhiteSpace(_taskInfo.Title))
+                    MessageBox.Show("Please enter a task title", "Empty title", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                else if (!_taskInfo.Due.HasValue)
+                    MessageBox.Show("Please enter a valid due date", "Invalid due date", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
     }
 }

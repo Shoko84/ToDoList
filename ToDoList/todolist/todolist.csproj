@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccessDBManager.cs" />
     <Compile Include="AddTaskControl.xaml.cs">
       <DependentUpon>AddTaskControl.xaml</DependentUpon>
     </Compile>

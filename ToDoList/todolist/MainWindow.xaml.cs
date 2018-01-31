@@ -30,12 +30,15 @@ namespace todolist
         {
             InitializeComponent();
             _taskPanelViewer = new TaskPanelViewer();
+            _taskPanelViewer.SetTasks(AccessDBManager.FindTasksFromDB());
             MainContentArea.Content = _taskPanelViewer;
 
             AddHandler(TaskPanelViewer.TaskEditEventFromPanelViewer,
                        new RoutedEventHandler(TaskEditEventFromMainWindowHandler));
             AddHandler(TaskPanelViewer.TaskDeleteEventFromPanelViewer,
                        new RoutedEventHandler(TaskDeleteEventFromMainWindowHandler));
+            AddHandler(TaskPanelViewer.TaskCompletedEventFromPanelViewer,
+                       new RoutedEventHandler(TaskCompletedEventFromMainWindowHandler));
             AddHandler(DeletionTaskControl.DeleteTaskConfirmEvent,
                        new RoutedEventHandler(DeleteTaskConfirmEventHandler));
             AddHandler(DeletionTaskControl.DeleteTaskCancelEvent,
@@ -53,10 +56,9 @@ namespace todolist
         // Local events
         private void AddTaskButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _addTaskControl = new AddTaskControl(Convert.ToUInt32(_taskPanelViewer.TaskPanels.Count));
+            _addTaskControl = new AddTaskControl();
             AddTaskButton.Visibility = Visibility.Hidden;
             MainContentArea.Content = _addTaskControl;
-
         }
 
         // Signals handler
@@ -78,11 +80,25 @@ namespace todolist
             MainContentArea.Content = _deletionTaskControl;
         }
 
+        private void TaskCompletedEventFromMainWindowHandler(object sender, RoutedEventArgs e)
+        {
+            TaskInfoArgs args = e as TaskInfoArgs;
+
+            AccessDBManager.UpdateTaskInDB(args.TaskInfo);
+
+            //Update from the DB
+            _taskPanelViewer.SetTasks(AccessDBManager.FindTasksFromDB());
+        }
+
         private void DeleteTaskConfirmEventHandler(object sender, RoutedEventArgs e)
         {
             TaskInfoArgs args = e as TaskInfoArgs;
 
-            _taskPanelViewer.DeleteTask(args.TaskInfo);
+            AccessDBManager.DeleteTaskInDB(args.TaskInfo);
+
+            //Update from the DB
+            _taskPanelViewer.SetTasks(AccessDBManager.FindTasksFromDB());
+
             AddTaskButton.Visibility = Visibility.Visible;
             MainContentArea.Content = _taskPanelViewer;
         }
@@ -97,7 +113,11 @@ namespace todolist
         {
             TaskInfoArgs args = e as TaskInfoArgs;
 
-            _taskPanelViewer.AddTask(args.TaskInfo);
+            AccessDBManager.InsertTaskInDB(args.TaskInfo);
+
+            //Update from the DB
+            _taskPanelViewer.SetTasks(AccessDBManager.FindTasksFromDB());
+
             AddTaskButton.Visibility = Visibility.Visible;
             MainContentArea.Content = _taskPanelViewer;
         }
@@ -112,7 +132,11 @@ namespace todolist
         {
             TaskInfoArgs args = e as TaskInfoArgs;
 
-            _taskPanelViewer.EditTask(args.TaskInfo);
+            AccessDBManager.UpdateTaskInDB(args.TaskInfo);
+
+            //Update from the DB
+            _taskPanelViewer.SetTasks(AccessDBManager.FindTasksFromDB());
+
             AddTaskButton.Visibility = Visibility.Visible;
             MainContentArea.Content = _taskPanelViewer;
         }

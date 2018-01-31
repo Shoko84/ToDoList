@@ -52,7 +52,15 @@ namespace todolist
             _taskInfo.Title = TitleTextBox.Text;
             _taskInfo.Content = ContentTextBox.Text;
             _taskInfo.Due = DueTimePicker.SelectedDate;
-            RaiseEvent(new TaskInfoArgs(EditTaskControl.EditTaskConfirmEvent, _taskInfo));
+            if (!String.IsNullOrWhiteSpace(_taskInfo.Title) && _taskInfo.Due.HasValue)
+                RaiseEvent(new TaskInfoArgs(EditTaskControl.EditTaskConfirmEvent, _taskInfo));
+            else
+            {
+                if (String.IsNullOrWhiteSpace(_taskInfo.Title))
+                    MessageBox.Show("Please enter a task title", "Empty title", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                else if (!_taskInfo.Due.HasValue)
+                    MessageBox.Show("Please enter a valid due date", "Invalid due date", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
     }
 }
