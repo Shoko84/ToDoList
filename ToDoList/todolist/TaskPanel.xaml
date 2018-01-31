@@ -9,9 +9,10 @@
     <Grid Name="TaskGrid" Background="#2e81b7" Width="168" Height="224" Margin="15"
           MouseLeftButtonDown="EditTaskClick" MouseEnter="HoveringEnterTask" MouseLeave="HoveringLeaveTask">
         <Grid.RowDefinitions>
-            <RowDefinition Height="7*"/>
-            <RowDefinition Height="23*"/>
-            <RowDefinition Height="70*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
         <Grid Name="TopInnerGrid" Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -25,5 +26,7 @@
                    Padding="10" TextTrimming="WordEllipsis" FontSize="14"/>
         <TextBlock Grid.Row="2" Name="TextContent" TextWrapping="Wrap" HorizontalAlignment="Left" Foreground="#ecf0f1"
                    Padding="10" TextTrimming="WordEllipsis"/>
+        <Button Name="DoneButton" Grid.Row="3" Width="50" Height="20" Content="Done" Background="#e54d42" Foreground="#ecf0f1" FontSize="9" VerticalAlignment="Center"
+                Click="DoneButton_Click" MouseEnter="DoneButton_MouseEnter" MouseLeave="DoneButton_MouseLeave"/>
     </Grid>
 </UserControl>

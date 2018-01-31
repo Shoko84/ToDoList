@@ -41,7 +41,10 @@ namespace todolist
                 Height = 10
             };
             if (Info.Completed)
+            {
                 img.Source = ImageAwesome.CreateImageSource(FontAwesomeIcon.Check, Brushes.White);
+                DoneButton.Visibility = Visibility.Hidden;
+            }
             else
                 img.Source = ImageAwesome.CreateImageSource(FontAwesomeIcon.Times, Brushes.White);
             Grid.SetColumn(TopInnerGrid, 0);
@@ -59,6 +62,10 @@ namespace todolist
 
         public static readonly RoutedEvent TaskDeleteEventFromPanel =
             EventManager.RegisterRoutedEvent("TaskDeleteEventFromPanel", RoutingStrategy.Bubble,
+            typeof(TaskInfoArgs), typeof(TaskPanel));
+
+        public static readonly RoutedEvent TaskCompletedEventFromPanel =
+            EventManager.RegisterRoutedEvent("TaskCompletedEventFromPanel", RoutingStrategy.Bubble,
             typeof(TaskInfoArgs), typeof(TaskPanel));
 
         public void BlockingEventRaising(bool _isBlocked)
@@ -104,6 +111,28 @@ namespace todolist
         }
 
         private void DeleteIcon_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (canHover)
+                TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4286b2"));
+            e.Handled = true;
+        }
+
+        private void DoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            Info.Completed = true;
+            if (!isBlocking)
+                RaiseEvent(new TaskInfoArgs(TaskPanel.TaskCompletedEventFromPanel, Info));
+        }
+
+        private void DoneButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (canHover)
+                TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2e81b7"));
+            e.Handled = true;
+        }
+
+        private void DoneButton_MouseLeave(object sender, MouseEventArgs e)
         {
             if (canHover)
                 TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4286b2"));
