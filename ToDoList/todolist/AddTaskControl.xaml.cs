@@ -46,6 +46,8 @@ namespace todolist
         {
             InitializeComponent();
             _taskInfo = new TaskInfo();
+            CalendarDateRange cdr = new CalendarDateRange(DateTime.MinValue, DateTime.Today.AddDays(-1));
+            DueTimePicker.BlackoutDates.Add(cdr);
         }
 
         /// <summary>
