@@ -8,8 +8,15 @@ using System.Threading.Tasks;
 
 namespace todolist
 {
+    /// <summary>
+    /// MSAccess Manager to stock data needed outside the program
+    /// </summary>
     public class AccessDBManager
     {
+        /// <summary>
+        /// Getting all tasks from the .mdb file
+        /// </summary>
+        /// <returns></returns>
         static public List<TaskInfo> FindTasksFromDB()
         {
             List<TaskInfo> taskInfos = new List<TaskInfo>();
@@ -31,6 +38,10 @@ namespace todolist
             return (taskInfos);
         }
 
+        /// <summary>
+        /// Inserting a task into the .mdb file
+        /// </summary>
+        /// <param name="taskInfo">The infos defining the new task</param>
         static public void InsertTaskInDB(TaskInfo taskInfo)
         {
             var connection = @"Provider =Microsoft.Jet.OLEDB.4.0;Data Source=" + Directory.GetCurrentDirectory().Replace('/', '\\') + "..\\..\\..\\todolist.mdb";
@@ -43,6 +54,10 @@ namespace todolist
             con.Close();
         }
 
+        /// <summary>
+        /// Updating an existing task from the .mdb file
+        /// </summary>
+        /// <param name="taskInfo">The infos defining the existing task</param>
         static public void UpdateTaskInDB(TaskInfo taskInfo)
         {
             var connection = @"Provider =Microsoft.Jet.OLEDB.4.0;Data Source=" + Directory.GetCurrentDirectory().Replace('/', '\\') + "..\\..\\..\\todolist.mdb";
@@ -55,6 +70,10 @@ namespace todolist
             con.Close();
         }
 
+        /// <summary>
+        /// Deleting an existing task from the .mdb file
+        /// </summary>
+        /// <param name="taskInfo">The infos defining the task to delete</param>
         static public void DeleteTaskInDB(TaskInfo taskInfo)
         {
             var connection = @"Provider =Microsoft.Jet.OLEDB.4.0;Data Source=" + Directory.GetCurrentDirectory().Replace('/', '\\') + "..\\..\\..\\todolist.mdb";

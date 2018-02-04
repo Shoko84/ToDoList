@@ -20,18 +20,28 @@ namespace todolist
     /// </summary>
     public partial class EditTaskControl : UserControl
     {
+        /// <summary>
+        /// The info's task that will be possibly edited
+        /// </summary>
         private TaskInfo _taskInfo;
 
-        //Events / Signals
+        /// <summary>
+        /// Event raised when the user clicks on the 'Confirm' button
+        /// </summary>
         public static readonly RoutedEvent EditTaskConfirmEvent =
             EventManager.RegisterRoutedEvent("EditTaskConfirmEvent", RoutingStrategy.Bubble,
             typeof(TaskInfoArgs), typeof(EditTaskControl));
 
+        /// <summary>
+        /// Event raised when the user clicks on the 'Cancel' button
+        /// </summary>
         public static readonly RoutedEvent EditTaskCancelEvent =
             EventManager.RegisterRoutedEvent("EditTaskCancelEvent", RoutingStrategy.Bubble,
             typeof(RoutedEventArgs), typeof(EditTaskControl));
 
-
+        /// <summary>
+        /// Constructor of the <see cref="EditTaskControl"/> class
+        /// </summary>
         public EditTaskControl(TaskInfo taskInfo)
         {
             InitializeComponent();
@@ -42,11 +52,21 @@ namespace todolist
             DueTimePicker.SelectedDate = _taskInfo.Due;
         }
 
+        /// <summary>
+        /// Function triggered when the 'Cancel' button is clicked
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             RaiseEvent(new RoutedEventArgs(EditTaskControl.EditTaskCancelEvent));
         }
 
+        /// <summary>
+        /// Function triggered when the 'Confirm' button is clicked
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             _taskInfo.Title = TitleTextBox.Text;

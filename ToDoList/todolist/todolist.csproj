@@ -69,6 +69,7 @@
     <Compile Include="EditTaskControl.xaml.cs">
       <DependentUpon>EditTaskControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FilterInfo.cs" />
     <Compile Include="TaskInfo.cs" />
     <Compile Include="TaskPanel.xaml.cs">
       <DependentUpon>TaskPanel.xaml</DependentUpon>

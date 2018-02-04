@@ -20,31 +20,49 @@ namespace todolist
     /// </summary>
     public partial class AddTaskControl : UserControl
     {
-        // Class variables
+        /// <summary>
+        /// The info's task that will be possibly added
+        /// </summary>
         TaskInfo _taskInfo;
 
-        //Events / Signals
+        /// <summary>
+        /// Event raised when the user clicks on the 'Confirm' button
+        /// </summary>
         public static readonly RoutedEvent AddTaskConfirmEvent =
             EventManager.RegisterRoutedEvent("AddTaskConfirmEvent", RoutingStrategy.Bubble,
             typeof(TaskInfoArgs), typeof(AddTaskControl));
 
+        /// <summary>
+        /// Event raised when the user clicks on the 'Cancel' button
+        /// </summary>
         public static readonly RoutedEvent AddTaskCancelEvent =
             EventManager.RegisterRoutedEvent("AddTaskCancelEvent", RoutingStrategy.Bubble,
             typeof(RoutedEventArgs), typeof(AddTaskControl));
 
-
-        // Methods
+        /// <summary>
+        /// Constructor of the <see cref="AddTaskControl"/> class
+        /// </summary>
         public AddTaskControl()
         {
             InitializeComponent();
             _taskInfo = new TaskInfo();
         }
 
+        /// <summary>
+        /// Function triggered when the 'Cancel' button is clicked
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             RaiseEvent(new RoutedEventArgs(AddTaskControl.AddTaskCancelEvent));
         }
 
+        /// <summary>
+        /// Function triggered when the 'Confirm' button is clicked
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             _taskInfo.Title = TitleTextBox.Text;
