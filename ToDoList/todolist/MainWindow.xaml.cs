@@ -21,11 +21,27 @@ namespace todolist
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Manage <see cref="TaskPanel"/> and display these
+        /// </summary>
         TaskPanelViewer     _taskPanelViewer;
+        /// <summary>
+        /// <see cref="UserControl"/> that handles task addition
+        /// </summary>
         AddTaskControl      _addTaskControl;
-        EditTaskControl     _editTaskControl;
+        /// <summary>
+        /// <see cref="UserControl"/> that handles task edition
+        /// </summary>
+        EditTaskControl _editTaskControl;
+        /// <summary>
+        /// <see cref="UserControl"/> that handles task deletion
+        /// </summary>
         DeletionTaskControl _deletionTaskControl;
 
+
+        /// <summary>
+        /// Constructor of the <see cref="MainWindow"/> class
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -53,7 +69,11 @@ namespace todolist
                        new RoutedEventHandler(EditTaskCancelEventHandler));
         }
 
-        // Local events
+        /// <summary>
+        /// Function triggered when the '+' button is clicked
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="MouseButtonEventArgs"/> events</param>
         private void AddTaskButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _addTaskControl = new AddTaskControl();
@@ -61,7 +81,11 @@ namespace todolist
             MainContentArea.Content = _addTaskControl;
         }
 
-        // Signals handler
+        /// <summary>
+        /// Function triggered when the panel body is clicked
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void TaskEditEventFromMainWindowHandler(object sender, RoutedEventArgs e)
         {
             TaskInfoArgs args = e as TaskInfoArgs;
@@ -71,6 +95,11 @@ namespace todolist
             MainContentArea.Content = _editTaskControl;
         }
 
+        /// <summary>
+        /// Function triggered when the 'Trash' icon on the panel is clicked
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void TaskDeleteEventFromMainWindowHandler(object sender, RoutedEventArgs e)
         {
             TaskInfoArgs args = e as TaskInfoArgs;
@@ -80,6 +109,11 @@ namespace todolist
             MainContentArea.Content = _deletionTaskControl;
         }
 
+        /// <summary>
+        /// Function triggered when the user clicked on the 'Done' button inside a task panel
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void TaskCompletedEventFromMainWindowHandler(object sender, RoutedEventArgs e)
         {
             TaskInfoArgs args = e as TaskInfoArgs;
@@ -90,6 +124,11 @@ namespace todolist
             _taskPanelViewer.SetTasks(AccessDBManager.FindTasksFromDB());
         }
 
+        /// <summary>
+        /// Function triggered when the 'Confirm' button is clicked on the <see cref="DeletionTaskControl"/>
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void DeleteTaskConfirmEventHandler(object sender, RoutedEventArgs e)
         {
             TaskInfoArgs args = e as TaskInfoArgs;
@@ -103,12 +142,22 @@ namespace todolist
             MainContentArea.Content = _taskPanelViewer;
         }
 
+        /// <summary>
+        /// Function triggered when the 'Cancel' button is clicked on the <see cref="DeletionTaskControl"/>
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void DeleteTaskCancelEventHandler(object sender, RoutedEventArgs e)
         {
             AddTaskButton.Visibility = Visibility.Visible;
             MainContentArea.Content = _taskPanelViewer;
         }
 
+        /// <summary>
+        /// Function triggered when the 'Confirm' button is clicked on the <see cref="AddTaskControl"/>
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void AddTaskConfirmEventHandler(object sender, RoutedEventArgs e)
         {
             TaskInfoArgs args = e as TaskInfoArgs;
@@ -122,12 +171,22 @@ namespace todolist
             MainContentArea.Content = _taskPanelViewer;
         }
 
+        /// <summary>
+        /// Function triggered when the 'Cancel' button is clicked on the <see cref="AddTaskControl"/>
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void AddTaskCancelEventHandler(object sender, RoutedEventArgs e)
         {
             AddTaskButton.Visibility = Visibility.Visible;
             MainContentArea.Content = _taskPanelViewer;
         }
 
+        /// <summary>
+        /// Function triggered when the 'Confirm' button is clicked on the <see cref="EditTaskControl"/>
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void EditTaskConfirmEventHandler(object sender, RoutedEventArgs e)
         {
             TaskInfoArgs args = e as TaskInfoArgs;
@@ -141,10 +200,26 @@ namespace todolist
             MainContentArea.Content = _taskPanelViewer;
         }
 
+        /// <summary>
+        /// Function triggered when the 'Cancel' button is clicked on the <see cref="EditTaskControl"/>
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void EditTaskCancelEventHandler(object sender, RoutedEventArgs e)
         {
             AddTaskButton.Visibility = Visibility.Visible;
             MainContentArea.Content = _taskPanelViewer;
+        }
+
+        /// <summary>
+        /// Function triggered when the checkbox state of a filter has changed
+        /// </summary>
+        /// <param name="sender">The sender <see cref="object"/></param>
+        /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
+        private void FilterParametersChanged(object sender, RoutedEventArgs e)
+        {
+            if (_taskPanelViewer != null && TodoFilterCheckbox != null && CompletedFilterCheckbox != null)
+                _taskPanelViewer.ApplyFilter(new FilterInfo(TodoFilterCheckbox.IsChecked ?? false, CompletedFilterCheckbox.IsChecked ?? false));
         }
     }
 }
