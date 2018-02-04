@@ -208,5 +208,17 @@ namespace todolist
             if (_taskPanelViewer != null && TodoFilterCheckbox != null && CompletedFilterCheckbox != null)
                 _taskPanelViewer.ApplyFilter(new FilterInfo(TodoFilterCheckbox.IsChecked ?? false, CompletedFilterCheckbox.IsChecked ?? false));
         }
+
+        private void ShowAllFilters_Click(object sender, RoutedEventArgs e)
+        {
+            TodoFilterCheckbox.IsChecked = true;
+            CompletedFilterCheckbox.IsChecked = true;
+        }
+
+        private void ClearAllFilters_Click(object sender, RoutedEventArgs e)
+        {
+            TodoFilterCheckbox.IsChecked = false;
+            CompletedFilterCheckbox.IsChecked = false;
+        }
     }
 }
