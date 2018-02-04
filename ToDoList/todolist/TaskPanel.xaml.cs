@@ -1,18 +1,8 @@
 ﻿using FontAwesome.WPF;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace todolist
 {
@@ -28,11 +18,11 @@ namespace todolist
         /// <summary>
         /// Are events blocked ?
         /// </summary>
-        private bool    isBlocking;
+        public bool    IsBlocking { get; set; }
         /// <summary>
         /// Are panels changing colors when hovering ?
         /// </summary>
-        private bool    canHover;
+        public bool    CanHover { get; set; }
 
         /// <summary>
         /// Constructor of the <see cref="TaskPanel"/> class
@@ -44,8 +34,8 @@ namespace todolist
             Info = taskInfo;
             TextTitle.Text = Info.Title;
             TextContent.Text = Info.Content;
-            isBlocking = false;
-            canHover = true;
+            IsBlocking = false;
+            CanHover = true;
 
             // Status of a Task
             Image img = new Image
@@ -91,31 +81,13 @@ namespace todolist
             typeof(TaskInfoArgs), typeof(TaskPanel));
 
         /// <summary>
-        /// Setter for the blocking events variable
-        /// </summary>
-        /// <param name="_isBlocked">Blocking or not events</param>
-        public void BlockingEventRaising(bool _isBlocked)
-        {
-            isBlocking = _isBlocked;
-        }
-
-        /// <summary>
-        /// Setter for the body panel coloration when hovering
-        /// </summary>
-        /// <param name="_canHover">Changing or not the panel color when hovering</param>
-        public void EnableHovering(bool _canHover)
-        {
-            canHover = _canHover;
-        }
-
-        /// <summary>
         /// Function triggered when the panel body is clicked
         /// </summary>
         /// <param name="sender">The sender <see cref="object"/></param>
         /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void EditTaskClick(object sender, MouseButtonEventArgs e)
         {
-            if (!isBlocking)
+            if (!IsBlocking)
                 RaiseEvent(new TaskInfoArgs(TaskPanel.TaskEditEventFromPanel, Info));
         }
 
@@ -126,7 +98,7 @@ namespace todolist
         /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void HoveringEnterTask(object sender, MouseEventArgs e)
         {
-            if (canHover)
+            if (CanHover)
                 TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4286b2"));
         }
 
@@ -137,7 +109,7 @@ namespace todolist
         /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void HoveringLeaveTask(object sender, MouseEventArgs e)
         {
-            if (canHover)
+            if (CanHover)
                 TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2e81b7"));
         }
 
@@ -149,7 +121,7 @@ namespace todolist
         private void DeleteIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
-            if (!isBlocking)
+            if (!IsBlocking)
                 RaiseEvent(new TaskInfoArgs(TaskPanel.TaskDeleteEventFromPanel, Info));
         }
 
@@ -160,7 +132,7 @@ namespace todolist
         /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void DeleteIcon_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (canHover)
+            if (CanHover)
                 TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2e81b7"));
             e.Handled = true;
         }
@@ -172,7 +144,7 @@ namespace todolist
         /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void DeleteIcon_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (canHover)
+            if (CanHover)
                 TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4286b2"));
             e.Handled = true;
         }
@@ -186,7 +158,7 @@ namespace todolist
         {
             e.Handled = true;
             Info.Completed = true;
-            if (!isBlocking)
+            if (!IsBlocking)
                 RaiseEvent(new TaskInfoArgs(TaskPanel.TaskCompletedEventFromPanel, Info));
         }
 
@@ -197,7 +169,7 @@ namespace todolist
         /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void DoneButton_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (canHover)
+            if (CanHover)
                 TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2e81b7"));
             e.Handled = true;
         }
@@ -209,7 +181,7 @@ namespace todolist
         /// <param name="e">The sender <see cref="RoutedEventArgs"/> events</param>
         private void DoneButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (canHover)
+            if (CanHover)
                 TaskGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4286b2"));
             e.Handled = true;
         }

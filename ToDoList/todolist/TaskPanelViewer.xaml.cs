@@ -1,17 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace todolist
 {
@@ -75,26 +65,6 @@ namespace todolist
         {
             TaskPanels.Clear();
             AddTasks(taskInfos);
-        }
-
-        /// <summary>
-        /// Edit an existing task with the task informations given
-        /// </summary>
-        /// <param name="taskInfo">Task informations</param>
-        public void EditTask(TaskInfo taskInfo)
-        {
-            TaskPanels[Convert.ToInt32(taskInfo.Id)] = new TaskPanel(taskInfo);
-            RefreshTaskPanelsOnScreen();
-        }
-
-        /// <summary>
-        /// Delete an existing task with the task informations given
-        /// </summary>
-        /// <param name="taskInfo">Task informations</param>
-        public void DeleteTask(TaskInfo taskInfo)
-        {
-            TaskPanels.RemoveAt(Convert.ToInt32(taskInfo.Id));
-            RefreshTaskPanelsOnScreen();
         }
 
         /// <summary>
