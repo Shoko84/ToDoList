@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "todolist", "todolist\todolist.csproj", "{EF47C314-4789-4A63-B127-937931E08AC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "todolistTests", "todolistTests\todolistTests.csproj", "{287A150C-3BB0-4707-858D-5C0531B38749}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EF47C314-4789-4A63-B127-937931E08AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF47C314-4789-4A63-B127-937931E08AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF47C314-4789-4A63-B127-937931E08AC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{287A150C-3BB0-4707-858D-5C0531B38749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{287A150C-3BB0-4707-858D-5C0531B38749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{287A150C-3BB0-4707-858D-5C0531B38749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{287A150C-3BB0-4707-858D-5C0531B38749}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
