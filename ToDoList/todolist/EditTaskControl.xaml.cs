@@ -39,6 +39,8 @@ namespace todolist
             TitleTextBox.Text = _taskInfo.Title;
             ContentTextBox.Text = _taskInfo.Content;
             DueTimePicker.SelectedDate = _taskInfo.Due;
+            CalendarDateRange cdr = new CalendarDateRange(DateTime.MinValue, DateTime.Today.AddDays(-1));
+            DueTimePicker.BlackoutDates.Add(cdr);
         }
 
         /// <summary>

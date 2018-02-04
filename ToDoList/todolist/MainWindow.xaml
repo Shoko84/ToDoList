@@ -25,8 +25,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Grid.Row="0" Margin="6" Content="Show all" Background="#e54d42" Foreground="#ecf0f1"/>
-            <Button Grid.Column="1" Grid.Row="0" Margin="6" Content="Clear all" Background="#e54d42" Foreground="#ecf0f1"/>
+            <Button Name="ShowAllFilters" Grid.Column="0" Grid.Row="0" Margin="6" Content="Show all" Background="#e54d42" Foreground="#ecf0f1" Click="ShowAllFilters_Click"/>
+            <Button Name="ClearAllFilters" Grid.Column="1" Grid.Row="0" Margin="6" Content="Clear all" Background="#e54d42" Foreground="#ecf0f1" Click="ClearAllFilters_Click"/>
             <CheckBox Name="TodoFilterCheckbox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FlowDirection="LeftToRight" IsChecked="True" Checked="FilterParametersChanged" Unchecked="FilterParametersChanged">
                 <TextBlock FlowDirection="LeftToRight" Text="To be done" Foreground="#ecf0f1"/>
             </CheckBox>
